@@ -1,0 +1,695 @@
+#+TITLE: Time-Varying Transition Probability Matrix
+#+SUBTITLE: application to brand share analysis
+#+AUTHOR: Noboru Murata
+#+EMAIL: noboru.murata@gmail.com
+#+DATE: \today
+#+DESCRIPTION: based on Chiba et al
+#+KEYWORDS: transition probability matrix, brand share
+#+LANGUAGE: en
+#+STARTUP: beamer hidestars content indent
+:BEAMER:
+#+OPTIONS: H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS: TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+# #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:https://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+HTML_LINK_UP:
+#+HTML_LINK_HOME:
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [fleqn,aspectratio=1610]
+#+BEAMER_HEADER: \usepackage[toc=none]{mytalk}
+# #+BEAMER_HEADER: \usepackage[toc=none,font=heavy]{mytalk}
+#+BEAMER_HEADER: \addbibresource{papers.bib}
+#+BEAMER_HEADER: \graphicspath{{figs/},{figs/pnas/},{refs/}}
+#+BEAMER_HEADER: \DeclareGraphicsExtensions{.pdf,.png,.eps,.jpg}
+#+BEAMER_HEADER: \institute{\url{https://noboru-murata.github.io/}}
+# #+BEAMER_HEADER: \institute[WASEDA]{Waseda University\\\url{https://noboru-murata.github.io/}}
+# #+BEAMER_HEADER: \titlegraphic{\includegraphics[height=1.5cm]{symbol_waseda_3.jpg}
+# #+BEAMER_HEADER:    \includegraphics[height=1.5cm,viewport=0 0 150 150,clip]{UTlogo.jpg}
+# #+BEAMER_HEADER:    \includegraphics[height=1.5cm]{nict-logo-new2.png}}
+# #+BEAMER_HEADER: \myLogo{\lower9pt\hbox{
+# #+BEAMER_HEADER:    \reflectbox{\includegraphics[height=26pt]{milk_gray.png}}
+# #+BEAMER_HEADER:    \kern-8pt\includegraphics[height=18pt,width=22pt]{milk_sepia.png}}}
+#+COLUMNS: "%45ITEM %10BEAMER_env(Env) %10BEAMER_act(Act) %4BEAMER_col(Col) %8BEAMER_opt(Opt)"
+# column view: C-c C-x C-c / C-c C-c or q
+# beamer block: C-c C-b
+:END:
+
+* Introduction
+** motivated examples
+*** Graph Structure Analysis
+two problems in graph inference:
+- *direct problem (deductive)*: \\
+  induce properties from known graph structure
+  - shortest path, traveling salesman, graph coloring %problem
+  - maximum flow, minimum cut %problem
+  - Google search (stationary distribution of Google matrix)
+- *inverse problem (inductive)*: \\
+  estimate graph structure from partially observed properties
+  - path analysis, graphical model estimation
+  - sparse estimation of accuracy matrix
+    # (SICS)
+  - structure estimation via graph Laplacian
+
+*** Motivated Problem
+**** left                                                          :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+begin_center
+#+begin_export latex
+{\small automobile sales data of manufacturers}\\
+\includegraphics[page=4,
+trim=40 285 30 80, clip,
+width=0.95\linewidth]
+{Chiba_etal2017}
+#+end_export
+#+end_center
+**** Questions                                        :B_alertblock:BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:BEAMER_env: alertblock
+:END:
+- why sales shares vary?
+- what happens in customer preferences?
+
+** stationary distribution of Google matrix
+*** Running Example
+**** left                                                          :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.65
+:END:
+#+begin_center
+\includegraphics[page=1,width=.9\linewidth]{weightedgraph}
+#+end_center
+**** right                                                         :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.35
+:END:
+directed graph
+- number of node: 26
+- edge exist.: 0.1
+- weight: \\
+  uniform on \([0,1]\)
+
+*** Adjacency Matrix
+- adjacency matrix \(W\)
+  \begin{equation}
+    (W)_{ij} = \text{strength of connection from \(i\) to \(j\)}
+  \end{equation}
+- indicate vector of sink node \(\boldsymbol{a}\)
+  \begin{equation}
+    (\boldsymbol{a})_i =
+    \begin{cases}
+      1, & \text{if}\;(W\boldsymbol{e})_i = 0\\
+      0, & \text{otherwise}
+    \end{cases}
+  \end{equation}
+  where \(\boldsymbol{e}\) is a vector of all \(1\)
+- normalized adjacency matrix (transition matrix) \(H\) 
+  \begin{equation}
+    H = \mathrm{diag}(W\boldsymbol{e}+\boldsymbol{a})^{-1} W
+  \end{equation}
+  \((H\boldsymbol{e})_i=1\) holds except for sink nodes
+
+*** Google Matrix
+- transition matrix with sink node adjustment \(S\)
+  \begin{align}
+    S =& H + \boldsymbol{a}\boldsymbol{e}^T/n\\
+    =&\text{(probabilistic transition)}\\
+       &+\text{(escape from sink nodes)}
+  \end{align}
+  probability matrix: \(S\boldsymbol{e}=\boldsymbol{e}\)
+- Google matrix \(G\)
+  \begin{align}
+    G
+    =& \alpha S + (1-\alpha) \boldsymbol{e}\boldsymbol{e}^T/n\\
+    =&\text{(transition along edges)}
+       +\text{(random transition)}
+       % &=\underbrace{\text{(第1項)}}_{\text{隣接行列による確率遷移}} 
+       % +\underbrace{\text{(第2項)}}_{\text{ランダムサーフによる確率遷移}}\\
+  \end{align}
+  probability matrix: \(G\boldsymbol{e}=\boldsymbol{e}\)
+
+*** 
+**** left                                                          :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+begin_export latex
+\includegraphics<+>[page=1,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=2,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=3,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=4,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=5,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=6,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=7,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=8,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=9,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=10,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=11,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=12,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=13,width=1.0\linewidth]{statdist}%
+#+end_export
+**** right                                                         :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+# convergence to stationary distribution
+- \(\alpha=0.85\)
+- initial: \\ uniform dist.
+
+*** 
+**** left                                                          :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+begin_export latex
+\includegraphics<+>[page=14,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=15,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=16,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=17,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=18,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=19,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=20,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=21,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=22,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=23,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=24,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=25,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=26,width=1.0\linewidth]{statdist}%
+#+end_export
+**** right                                                         :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+# convergence to stationary distribution
+- \(\alpha=0.85\)
+- initial: \\
+  # uniform on randomly selected
+  12 nodes
+
+*** Property of Stationary Distribution
+**** left                                                          :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+begin_center
+#+begin_export latex
+initial condition 1\\
+\includegraphics<1>[page=12,width=.95\linewidth]{statdist}%
+\includegraphics<2>[page=13,width=.95\linewidth]{statdist}%
+#+end_export
+#+end_center
+**** right                                                         :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+begin_center
+#+begin_export latex
+initial condition 2\\
+\includegraphics<1>[page=25,width=.95\linewidth]{statdist}%
+\includegraphics<2>[page=26,width=.95\linewidth]{statdist}%
+#+end_export
+#+end_center
+**** bottom                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+begin_center
+fast convergence to the same stationary distribution
+#+end_center
+
+*** 
+**** left                                                          :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+begin_export latex
+\includegraphics<+>[page=27,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=28,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=29,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=30,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=31,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=32,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=33,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=34,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=35,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=36,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=37,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=38,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=39,width=1.0\linewidth]{statdist}%
+#+end_export
+**** right                                                         :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+# scaling
+- \(\alpha=0.5\)
+- initial: \\
+  uniform dist.
+
+*** Property of Scaling (\(\alpha\))
+**** left                                                          :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+begin_center
+#+begin_export latex
+\(\alpha=0.85\)\\
+\includegraphics<1>[page=12,width=.95\linewidth]{statdist}%
+\includegraphics<2>[page=13,width=.95\linewidth]{statdist}%
+#+end_export
+#+end_center
+**** right                                                         :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+begin_center
+#+begin_export latex
+\(\alpha=0.5\)\\
+\includegraphics<1>[page=38,width=.95\linewidth]{statdist}%
+\includegraphics<2>[page=39,width=.95\linewidth]{statdist}%
+#+end_export
+#+end_center
+**** bottom                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+begin_center
+random diffusion with smaller scaling
+#+end_center
+
+*** 
+**** left                                                          :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+begin_export latex
+\includegraphics<+>[page=40,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=41,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=42,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=43,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=44,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=45,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=46,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=47,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=48,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=49,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=50,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=51,width=1.0\linewidth]{statdist}%
+\includegraphics<+>[page=52,width=1.0\linewidth]{statdist}%
+#+end_export
+**** right                                                         :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+# sink nodeの性質
+- without sink node escape
+- initial: \\
+  uniform dist.
+
+*** Property of Sink Node
+**** left                                                          :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+begin_center
+#+begin_export latex
+with sink node adjustment\\
+\includegraphics<1>[page=12,width=.95\linewidth]{statdist}%
+\includegraphics<2>[page=13,width=.95\linewidth]{statdist}%
+#+end_export
+#+end_center
+**** right                                                         :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+begin_center
+#+begin_export latex
+without sink node adjustment\\
+\includegraphics<1>[page=51,width=.95\linewidth]{statdist}%
+\includegraphics<2>[page=52,width=.95\linewidth]{statdist}%
+#+end_export
+#+end_center
+#+begin_center
+concentration on a specific node (``sink'')
+#+end_center
+
+*** Applications
+a simple and strong model of movements on directed graph:
+- behavior model of selection from finite options
+  - web surf model
+  - purchase model of certain genres
+  - transition model of audience ratings
+  - customer share model of restaurants/coffee shops
+- adjustment of transition matrix (sink node/alpha)
+  - out of stock or service
+  - capricious or adventurous attempts
+  - introduction from others
+  # these movements are represented by directed graph
+
+* Problem Formulation
+** time-varying graph and transition matrix
+*** Time-Varying Graph
+non-stationary data on directed graphs:
+- strength of edges slowly change in time
+  - change of structure
+  - change of stationary distribution
+- model assumption:
+  - frequent update (fast time scale; \(t\))\\
+    e.g.: purchase every day
+  - sparse observation
+    (slow time scale; \(T\))\\
+    e.g.: aggregate every week
+  observations are supposed to be
+  on stationary distribution at current point
+
+*** 
+**** left                                                          :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+begin_export latex
+\includegraphics<+>[page=1,width=1.0\linewidth]{graphdrift}%
+\includegraphics<+>[page=2,width=1.0\linewidth]{graphdrift}%
+\includegraphics<+>[page=3,width=1.0\linewidth]{graphdrift}%
+\includegraphics<+>[page=4,width=1.0\linewidth]{graphdrift}%
+\includegraphics<+>[page=5,width=1.0\linewidth]{graphdrift}%
+\includegraphics<+>[page=6,width=1.0\linewidth]{graphdrift}%
+\includegraphics<+>[page=7,width=1.0\linewidth]{graphdrift}%
+\includegraphics<+>[page=8,width=1.0\linewidth]{graphdrift}%
+\includegraphics<+>[page=9,width=1.0\linewidth]{graphdrift}%
+\includegraphics<+>[page=10,width=1.0\linewidth]{graphdrift}%
+\includegraphics<+>[page=11,width=1.0\linewidth]{graphdrift}%
+\includegraphics<+>[page=12,width=1.0\linewidth]{graphdrift}%
+#+end_export
+**** right                                                         :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+change of structure
+- 10% edges at random 
+- relatively small
+
+***   
+#+begin_center
+#+begin_export latex
+\onslide*<1>{
+  \includegraphics[page=1,width=.32\textwidth]{graphdrift} 
+  \includegraphics[page=2,width=.32\textwidth]{graphdrift}
+  \includegraphics[page=3,width=.32\textwidth]{graphdrift}\\
+  \includegraphics[page=4,width=.32\textwidth]{graphdrift}
+  \includegraphics[page=5,width=.32\textwidth]{graphdrift}
+  \includegraphics[page=6,width=.32\textwidth]{graphdrift}
+}
+\onslide*<2>{
+  \includegraphics[page=7,width=.32\textwidth]{graphdrift}
+  \includegraphics[page=8,width=.32\textwidth]{graphdrift}
+  \includegraphics[page=9,width=.32\textwidth]{graphdrift}\\
+  \includegraphics[page=10,width=.32\textwidth]{graphdrift}
+  \includegraphics[page=11,width=.32\textwidth]{graphdrift}
+  \includegraphics[page=12,width=.32\textwidth]{graphdrift}
+}
+#+end_export
+#+end_center
+
+*** 
+**** left                                                          :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+begin_export latex
+\includegraphics<+>[page=1,width=1.0\linewidth]{driftstat}%
+\includegraphics<+>[page=2,width=1.0\linewidth]{driftstat}%
+\includegraphics<+>[page=3,width=1.0\linewidth]{driftstat}%
+\includegraphics<+>[page=4,width=1.0\linewidth]{driftstat}%
+\includegraphics<+>[page=5,width=1.0\linewidth]{driftstat}%
+\includegraphics<+>[page=6,width=1.0\linewidth]{driftstat}%
+\includegraphics<+>[page=7,width=1.0\linewidth]{driftstat}%
+\includegraphics<+>[page=8,width=1.0\linewidth]{driftstat}%
+\includegraphics<+>[page=9,width=1.0\linewidth]{driftstat}%
+\includegraphics<+>[page=10,width=1.0\linewidth]{driftstat}%
+\includegraphics<+>[page=11,width=1.0\linewidth]{driftstat}%
+\includegraphics<+>[page=12,width=1.0\linewidth]{driftstat}%
+#+end_export
+**** right                                                         :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+change of stationary dist.%ribution
+- 10% edges at random 
+- large effect
+
+*** 
+#+begin_center
+#+begin_export latex
+\onslide*<1>{
+  \includegraphics[page=1,width=.32\textwidth]{driftstat} 
+  \includegraphics[page=2,width=.32\textwidth]{driftstat}
+  \includegraphics[page=3,width=.32\textwidth]{driftstat}\\
+  \includegraphics[page=4,width=.32\textwidth]{driftstat}
+  \includegraphics[page=5,width=.32\textwidth]{driftstat}
+  \includegraphics[page=6,width=.32\textwidth]{driftstat}
+}
+\onslide*<2>{
+  \includegraphics[page=7,width=.32\textwidth]{driftstat}
+  \includegraphics[page=8,width=.32\textwidth]{driftstat}
+  \includegraphics[page=9,width=.32\textwidth]{driftstat}\\
+  \includegraphics[page=10,width=.32\textwidth]{driftstat}
+  \includegraphics[page=11,width=.32\textwidth]{driftstat}
+  \includegraphics[page=12,width=.32\textwidth]{driftstat}
+}
+#+end_export
+#+end_center
+
+*** 
+**** left                                                          :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+begin_center
+\includegraphics[page=13,width=1.0\linewidth]{driftstat}
+#+end_center
+**** right                                                         :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+change of statinary dist.%ribution
+- 10% edges at random 
+- large effect
+** graph estimation problem
+*** Our Problem
+**** Problem                                                :B_alertblock:
+:PROPERTIES:
+:BEAMER_env: alertblock
+:END:
+for given series of stationary distributions \(\{\pi_t\}\),
+estimate series of graph structures \(\{G_t\}\).
+\begin{equation}
+  \text{minimize } L(\{G_t\}) \quad
+  \text{subject to}\;\forall t,\;\pi_t^T G_t = \pi_t^T
+\end{equation}
+# find a sequence of graphs \(\{H_t\}\) which minimizes
+**** notes                                               :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+difficulties:
+- infinitely many matrices have
+  the same eigenvector
+- the followings are needed:
+  - assumptions on graph structures
+  - assumptions of graph changes
+e.g. (fused lasso):
+for a certain sparse norm of matrix, \(\|\cdot\|_s\),
+\begin{equation}
+  L(\{G_t\}) = \sum_t \|G_t\|_s + \sum_t \|G_{t+1}-G_t\|_s 
+\end{equation}
+
+*** 
+#+begin_center
+#+begin_export latex
+\includegraphics<+>[page=1,width=.9\linewidth]{schematic}%
+\includegraphics<+>[page=2,width=.9\linewidth]{schematic}%  
+\includegraphics<+>[page=3,width=.9\linewidth]{schematic}% 
+\includegraphics<+>[page=4,width=.9\linewidth]{schematic}%  
+\includegraphics<+>[page=5,width=.9\linewidth]{schematic}% 
+\includegraphics<+>[page=6,width=.9\linewidth]{schematic}%  
+#+end_export
+#+end_center
+
+*** Restriction of Eigenvector
+make matrices keep in a restricted subspace:
+- eigenvector of matrix \(A\) to be
+  \(\boldsymbol{a}\) (unit vector):
+  \begin{equation}
+    A\boldsymbol{a}=\lambda \boldsymbol{a}+\boldsymbol{b}
+    \Rightarrow A-\boldsymbol{b}\boldsymbol{a}^T \rightarrow A
+    % \Rightarrow A\leftarrow A-\boldsymbol{b}\boldsymbol{a}^T
+  \end{equation}
+- eigenvalue of eigenvector \(\boldsymbol{a}\)
+  to be \(\mu\):
+  \begin{equation}
+    A\boldsymbol{a}=\lambda \boldsymbol{a}
+    \Rightarrow A+(\mu-\lambda)\boldsymbol{a}\boldsymbol{a}^T \rightarrow A
+    % \Rightarrow A\leftarrow A+(\mu-\lambda)\boldsymbol{a}\boldsymbol{a}^T
+  \end{equation}
+- \(A\) to be a probability matrix:
+  \begin{equation}
+    A\boldsymbol{e}=\boldsymbol{d}
+    \Rightarrow \mathrm{diag}(\boldsymbol{d})^{-1}A \rightarrow A
+    % \Rightarrow A\leftarrow \mathrm{diag}(\boldsymbol{d})^{-1}A
+  \end{equation}
+# above oprations make matrices keep in
+# a properly restricted subspace
+
+* Numerical Examples
+** real-world data analysis
+*** Automobile Sales Data
+**** Reference                                                   :B_block:
+:PROPERTIES:
+:BEAMER_env: block
+:END:
+\citeauthor{Chiba_etal2017}
+\citetitle{Chiba_etal2017}
+**** notes                                               :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+- quarterly unit automobile sales data of manufacturers from
+  2007-1Q to 2015-4Q
+- estimate transition paths and discuss the relation between
+  social events and estimated results
+- objective:
+  \begin{equation}
+    L(\{G_t\}) = \sum_t \|G_{t+1}-G_t\|_{1}
+  \end{equation}
+- optimization:
+  simplex method with slack variables
+
+*** 
+#+begin_center
+#+begin_export latex
+automobile sales for different manufactures\\
+\includegraphics[page=4,
+trim=40 285 30 80, clip,
+width=.7\linewidth]
+{Chiba_etal2017}
+#+end_export
+#+end_center
+
+*** 
+#+begin_center
+#+begin_export latex
+market share transition\\
+\includegraphics[page=7,
+trim=40 90 30 425, clip,
+width=.9\linewidth]
+{Chiba_etal2017}
+#+end_export
+#+end_center
+
+*** 
+#+begin_center
+#+begin_export latex
+averages and standard deviations of sales shares\\
+\includegraphics[page=8,
+trim=40 365 30 70, clip,
+width=.9\linewidth]
+{Chiba_etal2017}
+#+end_export
+#+end_center
+
+*** Graph Visualization
+**** left                                                          :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+begin_center
+#+begin_export latex
+2007-1Q\\
+\includegraphics[page=9,
+trim=200 520 125 70, clip,
+width=.9\linewidth]
+{Chiba_etal2017}
+#+end_export
+#+end_center
+**** right                                                         :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+- remove minor edge below 0.24
+- show market share with node size 
+- cf. GM and Honda are allied
+
+*** 
+#+begin_center
+#+begin_export latex
+% 2007\\
+\includegraphics[page=10,
+trim=40 280 30 70, clip,
+width=.7\linewidth]
+{Chiba_etal2017}
+
+{\footnotesize
+  In March 2008, TOYOTA has become the world’s top seller by beating GM} 
+#+end_export
+#+end_center
+
+*** 
+#+begin_center
+#+begin_export latex
+% 2008/2009\\
+\includegraphics[page=11,
+trim=40 500 30 70, clip,
+width=.9\linewidth]
+{Chiba_etal2017}
+
+{\footnotesize
+  In 2009, TOYOTA launched a massive recall}
+#+end_export
+#+end_center
+
+*** 
+#+begin_center
+#+begin_export latex
+% 2013\\
+\includegraphics[page=11,
+trim=40 110 30 460, clip,
+width=.9\linewidth]
+{Chiba_etal2017}
+
+{\footnotesize
+  In 2013, VW beats GM in total sales amount to claim
+  second position in the automobile industry} 
+#+end_export
+#+end_center
+
+* Conclusion
+*** Concluding Remarks
+we presented the followings
+# found
+- a model of transitions and stationary distributions
+- a simple method for estimating transition matrices
+  from a sequence of stationary distributions
+- analysis of consumer transitions for sales share data
+  without detailed recording of consumer transitions
+
+# - in addition, possible application would be:
+further investigation would be devoted to
+- other objectives and constraints to improve the accuracy of
+  estimation and interpretability
+- other probabilistic models for estimating changes in
+  transitions
+
+*** References
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+\printbibliography[heading=none]
+
+* COMMENT File Local Variables
+# Local Variables:
+# End:
+    

@@ -1,0 +1,20 @@
+* brand-share
+
+In a product market or stock market, different products or stocks
+compete for the same consumers or purchasers. We propose a method to
+estimate the time-varying transition matrix of the product share using
+a multivariate time series of the product share. The method is based
+on the assumption that each of the observed time series of shares is a
+stationary dis- tribution of the underlying Markov processes
+characterized by transition probability matrices. We estimate
+transition probability matrices for every observation under natural
+assumptions. We demonstrate, on a real-world dataset of the share of
+automobiles, that the proposed method can find intrinsic transition of
+shares.
+
+#+begin_quote
+Chiba, T., Hino, H., Akaho, S., and Murata, N.:
+"Time-Varying Transition Probability Matrix Estimation and Its Application to Brand Share Analysis",
+/PLOS ONE/, Volume 12, Issue 1, January 2017, e0169981.
+https://doi.org/10.1371/journal.pone.0169981
+#+end_quote
