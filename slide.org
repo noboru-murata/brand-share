@@ -41,8 +41,8 @@
 two problems in graph inference:
 - *direct problem (deductive)*: \\
   induce properties from known graph structure
-  - shortest path, traveling salesman, graph coloring %problem
-  - maximum flow, minimum cut %problem
+  - shortest path, traveling salesman, graph coloring problem
+  - maximum flow, minimum cut problem
   - Google search (stationary distribution of Google matrix)
 - *inverse problem (inductive)*: \\
   estimate graph structure from partially observed properties
@@ -157,7 +157,7 @@ directed graph
 :END:
 # convergence to stationary distribution
 - \(\alpha=0.85\)
-- initial: \\ uniform dist.
+- initial: uniform dist.
 
 *** 
 **** left                                                          :BMCOL:
@@ -185,9 +185,10 @@ directed graph
 :END:
 # convergence to stationary distribution
 - \(\alpha=0.85\)
-- initial: \\
+- initial: 12 nodes
+  (randomly selected)
   # uniform on randomly selected
-  12 nodes
+  
 
 *** Property of Stationary Distribution
 **** left                                                          :BMCOL:
@@ -246,8 +247,7 @@ fast convergence to the same stationary distribution
 :END:
 # scaling
 - \(\alpha=0.5\)
-- initial: \\
-  uniform dist.
+- initial: uniform dist.
 
 *** Property of Scaling (\(\alpha\))
 **** left                                                          :BMCOL:
@@ -306,8 +306,7 @@ random diffusion with smaller scaling
 :END:
 # sink nodeの性質
 - without sink node escape
-- initial: \\
-  uniform dist.
+- initial: uniform dist.
 
 *** Property of Sink Node
 **** left                                                          :BMCOL:
@@ -437,7 +436,7 @@ change of structure
 :PROPERTIES:
 :BEAMER_col: 0.4
 :END:
-change of stationary dist.%ribution
+change of stationary dist.
 - 10% edges at random 
 - large effect
 
