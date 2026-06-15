@@ -1,4 +1,4 @@
-% Created 2024-06-08 Sat 10:20
+% Created 2026-06-15 Mon 11:13
 % Intended LaTeX compiler: pdflatex
 \documentclass[fleqn,aspectratio=1610]{beamer}
 \author{Noboru Murata}
@@ -6,7 +6,7 @@
 \title{Time-Varying Transition Probability Matrix}
 \subtitle{application to brand share analysis}
 \usepackage[toc=none]{mytalk}
-\addbibresource{papers.bib}
+\addbibresource{library.bib}
 \graphicspath{{figs/}{refs/}}
 \DeclareGraphicsExtensions{.pdf,.png,.eps,.jpg}
 \institute{\url{https://noboru-murata.github.io/}}
@@ -15,7 +15,7 @@
  pdftitle={Time-Varying Transition Probability Matrix},
  pdfkeywords={transition probability matrix, brand share},
  pdfsubject={based on Chiba et al (2017), https://doi.org/10.1371/journal.pone.0169981},
- pdfcreator={Emacs 29.3 (Org mode 9.7-pre)}, 
+ pdfcreator={Emacs 30.2 (Org mode 9.8-pre)}, 
  pdflang={English}}
 \begin{document}
 
@@ -25,10 +25,10 @@
 \end{frame}
 
 \section{Introduction}
-\label{sec:org5c1c5a3}
+\label{sec:org7efa3c1}
 \subsection{motivated examples}
-\label{sec:org8fbbe3a}
-\begin{frame}[label={sec:org14e10b7}]{Graph Structure Analysis}
+\label{sec:org3c5cfaf}
+\begin{frame}[label={sec:org7cc2af4}]{Graph Structure Analysis}
 two problems in graph inference:
 \begin{itemize}
 \item \alert{direct problem (deductive)}: \\
@@ -42,12 +42,12 @@ induce properties from known graph structure
 estimate graph structure from partially observed properties
 \begin{itemize}
 \item path analysis, graphical model estimation
-\item sparse estimation of accuracy matrix
+\item sparse estimation of adjacency matrix
 \item structure estimation via graph Laplacian
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgf222872}]{Motivated Problem}
+\begin{frame}[label={sec:org93e3ac5}]{Motivated Problem}
 \begin{columns}
 \begin{column}{0.6\columnwidth}
 \begin{center}
@@ -69,8 +69,8 @@ width=0.95\linewidth]
 \end{columns}
 \end{frame}
 \subsection{stationary distribution of Google matrix}
-\label{sec:org58316c3}
-\begin{frame}[label={sec:org14aa9e8}]{Running Example}
+\label{sec:orgad6de36}
+\begin{frame}[label={sec:org6ff196c}]{Running Example}
 \begin{columns}
 \begin{column}{0.65\columnwidth}
 \begin{center}
@@ -88,7 +88,7 @@ uniform on \([0,1]\)
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgdf331e3}]{Adjacency Matrix}
+\begin{frame}[label={sec:orgb10e805}]{Adjacency Matrix}
 \begin{itemize}
 \item adjacency matrix \(W\)
 \begin{equation}
@@ -110,7 +110,7 @@ where \(\boldsymbol{e}\) is a vector of all \(1\)
 \((H\boldsymbol{e})_i=1\) holds except for sink nodes
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org5cd6b61}]{Google Matrix}
+\begin{frame}[label={sec:orgb2f7add}]{Google Matrix}
 \begin{itemize}
 \item transition matrix with sink node adjustment \(S\)
 \begin{align}
@@ -131,7 +131,7 @@ probability matrix: \(S\boldsymbol{e}=\boldsymbol{e}\)
 probability matrix: \(G\boldsymbol{e}=\boldsymbol{e}\)
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orge6f7f66}]{}
+\begin{frame}[label={sec:org1cdc01d}]{}
 \begin{columns}
 \begin{column}{0.6\columnwidth}
 \includegraphics<+>[page=1,width=1.0\linewidth]{statdist}%
@@ -156,7 +156,7 @@ probability matrix: \(G\boldsymbol{e}=\boldsymbol{e}\)
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org110e183}]{}
+\begin{frame}[label={sec:orga652e7a}]{}
 \begin{columns}
 \begin{column}{0.6\columnwidth}
 \includegraphics<+>[page=14,width=1.0\linewidth]{statdist}%
@@ -182,20 +182,20 @@ probability matrix: \(G\boldsymbol{e}=\boldsymbol{e}\)
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org50b4832}]{Property of Stationary Distribution}
+\begin{frame}[label={sec:org508c937}]{Property of Stationary Distribution}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{center}
 initial condition 1\\
-\includegraphics<1>[page=12,width=.95\linewidth]{statdist}%
-\includegraphics<2>[page=13,width=.95\linewidth]{statdist}%
+\includegraphics<1>[page=12,width=.9\linewidth]{statdist}%
+\includegraphics<2>[page=13,width=.9\linewidth]{statdist}%
 \end{center}
 \end{column}
 \begin{column}{0.5\columnwidth}
 \begin{center}
 initial condition 2\\
-\includegraphics<1>[page=25,width=.95\linewidth]{statdist}%
-\includegraphics<2>[page=26,width=.95\linewidth]{statdist}%
+\includegraphics<1>[page=25,width=.9\linewidth]{statdist}%
+\includegraphics<2>[page=26,width=.9\linewidth]{statdist}%
 \end{center}
 \end{column}
 \end{columns}
@@ -203,7 +203,7 @@ initial condition 2\\
 fast convergence to the same stationary distribution
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org3f0a7b5}]{}
+\begin{frame}[label={sec:orgaa0bd61}]{}
 \begin{columns}
 \begin{column}{0.6\columnwidth}
 \includegraphics<+>[page=27,width=1.0\linewidth]{statdist}%
@@ -228,20 +228,20 @@ fast convergence to the same stationary distribution
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orged49117}]{Property of Scaling (\(\alpha\))}
+\begin{frame}[label={sec:orgdb90757}]{Property of Scaling (\(\alpha\))}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{center}
 \(\alpha=0.85\)\\
-\includegraphics<1>[page=12,width=.95\linewidth]{statdist}%
-\includegraphics<2>[page=13,width=.95\linewidth]{statdist}%
+\includegraphics<1>[page=12,width=.9\linewidth]{statdist}%
+\includegraphics<2>[page=13,width=.9\linewidth]{statdist}%
 \end{center}
 \end{column}
 \begin{column}{0.5\columnwidth}
 \begin{center}
 \(\alpha=0.5\)\\
-\includegraphics<1>[page=38,width=.95\linewidth]{statdist}%
-\includegraphics<2>[page=39,width=.95\linewidth]{statdist}%
+\includegraphics<1>[page=38,width=.9\linewidth]{statdist}%
+\includegraphics<2>[page=39,width=.9\linewidth]{statdist}%
 \end{center}
 \end{column}
 \end{columns}
@@ -249,7 +249,7 @@ fast convergence to the same stationary distribution
 random diffusion with smaller scaling
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:orgde98276}]{}
+\begin{frame}[label={sec:org1555ff2}]{}
 \begin{columns}
 \begin{column}{0.6\columnwidth}
 \includegraphics<+>[page=40,width=1.0\linewidth]{statdist}%
@@ -274,28 +274,28 @@ random diffusion with smaller scaling
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org1f163cb}]{Property of Sink Node}
+\begin{frame}[label={sec:orgeb88742}]{Property of Sink Node}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{center}
 with sink node adjustment\\
-\includegraphics<1>[page=12,width=.95\linewidth]{statdist}%
-\includegraphics<2>[page=13,width=.95\linewidth]{statdist}%
+\includegraphics<1>[page=12,width=.9\linewidth]{statdist}%
+\includegraphics<2>[page=13,width=.9\linewidth]{statdist}%
 \end{center}
 \end{column}
 \begin{column}{0.5\columnwidth}
 \begin{center}
 without sink node adjustment\\
-\includegraphics<1>[page=51,width=.95\linewidth]{statdist}%
-\includegraphics<2>[page=52,width=.95\linewidth]{statdist}%
-\end{center}
-\begin{center}
-concentration on a specific node (``sink'')
+\includegraphics<1>[page=51,width=.9\linewidth]{statdist}%
+\includegraphics<2>[page=52,width=.9\linewidth]{statdist}%
 \end{center}
 \end{column}
 \end{columns}
+\begin{center}
+concentration on a specific node (``sink'')
+\end{center}
 \end{frame}
-\begin{frame}[label={sec:org2df6b82}]{Applications}
+\begin{frame}[label={sec:orgc473165}]{Applications}
 a simple and strong model of movements on directed graph:
 \begin{itemize}
 \item behavior model of selection from finite options
@@ -314,10 +314,10 @@ a simple and strong model of movements on directed graph:
 \end{itemize}
 \end{frame}
 \section{Problem Formulation}
-\label{sec:org730e2c2}
+\label{sec:orge18face}
 \subsection{time-varying graph and transition matrix}
-\label{sec:org4c88a26}
-\begin{frame}[label={sec:org8eff03d}]{Time-Varying Graph}
+\label{sec:org262f61c}
+\begin{frame}[label={sec:orga79b0f6}]{Time-Varying Graph}
 non-stationary data on directed graphs:
 \begin{itemize}
 \item strength of edges slowly change in time
@@ -337,7 +337,7 @@ observations are supposed to be
 on stationary distribution at current point
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org78922e5}]{}
+\begin{frame}[label={sec:org55c4ecb}]{}
 \begin{columns}
 \begin{column}{0.6\columnwidth}
 \includegraphics<+>[page=1,width=1.0\linewidth]{graphdrift}%
@@ -362,7 +362,7 @@ change of structure
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org8d303dd}]{}
+\begin{frame}[label={sec:org94aee3e}]{}
 \begin{center}
 \onslide*<1>{
   \includegraphics[page=1,width=.32\textwidth]{graphdrift} 
@@ -382,7 +382,7 @@ change of structure
 }
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org5addf93}]{}
+\begin{frame}[label={sec:org461aa1f}]{}
 \begin{columns}
 \begin{column}{0.6\columnwidth}
 \includegraphics<+>[page=1,width=1.0\linewidth]{driftstat}%
@@ -407,7 +407,7 @@ change of stationary dist.
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org81829b5}]{}
+\begin{frame}[label={sec:org56b96d9}]{}
 \begin{center}
 \onslide*<1>{
   \includegraphics[page=1,width=.32\textwidth]{driftstat} 
@@ -427,7 +427,7 @@ change of stationary dist.
 }
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:orgd2061c3}]{}
+\begin{frame}[label={sec:org70e6b2e}]{}
 \begin{columns}
 \begin{column}{0.6\columnwidth}
 \begin{center}
@@ -435,7 +435,7 @@ change of stationary dist.
 \end{center}
 \end{column}
 \begin{column}{0.4\columnwidth}
-change of statinary dist.\%ribution
+change of statinary dist.
 \begin{itemize}
 \item 10\% edges at random
 \item large effect
@@ -444,8 +444,8 @@ change of statinary dist.\%ribution
 \end{columns}
 \end{frame}
 \subsection{graph estimation problem}
-\label{sec:orgd8048e4}
-\begin{frame}[label={sec:org5d28fb0}]{Our Problem}
+\label{sec:orgd61ee19}
+\begin{frame}[label={sec:orgd861def}]{Our Problem}
 \begin{alertblock}{Problem}
 for given series of stationary distributions \(\{\pi_t\}\),
 estimate series of graph structures \(\{G_t\}\).
@@ -458,7 +458,7 @@ difficulties:
 \begin{itemize}
 \item infinitely many matrices have
 the same eigenvector
-\item the followings are needed:
+\item followings are needed:
 \begin{itemize}
 \item assumptions on graph structures
 \item assumptions of graph changes
@@ -470,7 +470,7 @@ for a certain sparse norm of matrix, \(\|\cdot\|_s\),
   L(\{G_t\}) = \sum_t \|G_t\|_s + \sum_t \|G_{t+1}-G_t\|_s 
 \end{equation}
 \end{frame}
-\begin{frame}[label={sec:org5c44383}]{}
+\begin{frame}[label={sec:org3317f07}]{}
 \begin{center}
 \includegraphics<+>[page=1,width=.9\linewidth]{schematic}%
 \includegraphics<+>[page=2,width=.9\linewidth]{schematic}%  
@@ -480,7 +480,7 @@ for a certain sparse norm of matrix, \(\|\cdot\|_s\),
 \includegraphics<+>[page=6,width=.9\linewidth]{schematic}%  
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:orge6f76de}]{Restriction of Eigenvector}
+\begin{frame}[label={sec:orgc948180}]{Restriction of Eigenvector}
 make matrices keep in a restricted subspace:
 \begin{itemize}
 \item eigenvector of matrix \(A\) to be
@@ -506,13 +506,13 @@ to be \(\mu\):
 \end{itemize}
 \end{frame}
 \section{Numerical Examples}
-\label{sec:orgd57e87f}
+\label{sec:org871e20c}
 \subsection{real-world data analysis}
-\label{sec:org7790dac}
-\begin{frame}[label={sec:orgad06acd}]{Automobile Sales Data}
+\label{sec:org51336c9}
+\begin{frame}[label={sec:org626a644}]{Automobile Sales Data}
 \begin{block}{Reference}
-\citeauthor{Chiba_etal2017}
-\citetitle{Chiba_etal2017}
+\citeauthor{Chiba_etal_2017_TimeVaryingTransitionProbability}
+\citetitle{Chiba_etal_2017_TimeVaryingTransitionProbability}
 \end{block}
 \begin{itemize}
 \item quarterly unit automobile sales data of manufacturers from
@@ -527,7 +527,7 @@ social events and estimated results
 simplex method with slack variables
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org3c61c73}]{}
+\begin{frame}[label={sec:org968f5be}]{}
 \begin{center}
 automobile sales for different manufactures\\
 \includegraphics[page=4,
@@ -536,7 +536,7 @@ width=.7\linewidth]
 {Chiba_etal2017}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org391ba22}]{}
+\begin{frame}[label={sec:org6f3b207}]{}
 \begin{center}
 market share transition\\
 \includegraphics[page=7,
@@ -545,7 +545,7 @@ width=.9\linewidth]
 {Chiba_etal2017}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org5ab35e6}]{}
+\begin{frame}[label={sec:orgfc70757}]{}
 \begin{center}
 averages and standard deviations of sales shares\\
 \includegraphics[page=8,
@@ -554,7 +554,7 @@ width=.9\linewidth]
 {Chiba_etal2017}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org306e0d1}]{Graph Visualization}
+\begin{frame}[label={sec:orga5b4117}]{Graph Visualization}
 \begin{columns}
 \begin{column}{0.6\columnwidth}
 \begin{center}
@@ -574,7 +574,7 @@ width=.9\linewidth]
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgbfadabd}]{}
+\begin{frame}[label={sec:orgffeced3}]{}
 \begin{center}
 % 2007\\
 \includegraphics[page=10,
@@ -586,7 +586,7 @@ width=.7\linewidth]
   In March 2008, TOYOTA has become the world’s top seller by beating GM} 
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:orgedcf47a}]{}
+\begin{frame}[label={sec:org82c8703}]{}
 \begin{center}
 % 2008/2009\\
 \includegraphics[page=11,
@@ -598,7 +598,7 @@ width=.9\linewidth]
   In 2009, TOYOTA launched a massive recall}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org4e81cd1}]{}
+\begin{frame}[label={sec:org66cacb1}]{}
 \begin{center}
 % 2013\\
 \includegraphics[page=11,
@@ -612,8 +612,8 @@ width=.9\linewidth]
 \end{center}
 \end{frame}
 \section{Conclusion}
-\label{sec:org0939f0a}
-\begin{frame}[label={sec:org047aef0}]{Concluding Remarks}
+\label{sec:orgfa671d2}
+\begin{frame}[label={sec:org2586ecd}]{Concluding Remarks}
 we presented the followings
 
 \begin{itemize}

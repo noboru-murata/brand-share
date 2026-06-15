@@ -19,7 +19,8 @@
 #+LaTeX_CLASS_OPTIONS: [fleqn,aspectratio=1610]
 #+BEAMER_HEADER: \usepackage[toc=none]{mytalk}
 # #+BEAMER_HEADER: \usepackage[toc=none,font=heavy]{mytalk}
-#+BEAMER_HEADER: \addbibresource{papers.bib}
+#+BEAMER_HEADER: \addbibresource{library.bib}
+# #+BEAMER_HEADER: \addbibresource{papers.bib}
 #+BEAMER_HEADER: \graphicspath{{figs/}{refs/}}
 #+BEAMER_HEADER: \DeclareGraphicsExtensions{.pdf,.png,.eps,.jpg}
 #+BEAMER_HEADER: \institute{\url{https://noboru-murata.github.io/}}
@@ -47,8 +48,8 @@ two problems in graph inference:
 - *inverse problem (inductive)*: \\
   estimate graph structure from partially observed properties
   - path analysis, graphical model estimation
-  - sparse estimation of accuracy matrix
-    # (SICS)
+  - sparse estimation of adjacency matrix
+    # (SICS) accuracy matrix?
   - structure estimation via graph Laplacian
 
 *** Motivated Problem
@@ -198,8 +199,8 @@ directed graph
 #+begin_center
 #+begin_export latex
 initial condition 1\\
-\includegraphics<1>[page=12,width=.95\linewidth]{statdist}%
-\includegraphics<2>[page=13,width=.95\linewidth]{statdist}%
+\includegraphics<1>[page=12,width=.9\linewidth]{statdist}%
+\includegraphics<2>[page=13,width=.9\linewidth]{statdist}%
 #+end_export
 #+end_center
 **** right                                                         :BMCOL:
@@ -209,8 +210,8 @@ initial condition 1\\
 #+begin_center
 #+begin_export latex
 initial condition 2\\
-\includegraphics<1>[page=25,width=.95\linewidth]{statdist}%
-\includegraphics<2>[page=26,width=.95\linewidth]{statdist}%
+\includegraphics<1>[page=25,width=.9\linewidth]{statdist}%
+\includegraphics<2>[page=26,width=.9\linewidth]{statdist}%
 #+end_export
 #+end_center
 **** bottom                                              :B_ignoreheading:
@@ -257,8 +258,8 @@ fast convergence to the same stationary distribution
 #+begin_center
 #+begin_export latex
 \(\alpha=0.85\)\\
-\includegraphics<1>[page=12,width=.95\linewidth]{statdist}%
-\includegraphics<2>[page=13,width=.95\linewidth]{statdist}%
+\includegraphics<1>[page=12,width=.9\linewidth]{statdist}%
+\includegraphics<2>[page=13,width=.9\linewidth]{statdist}%
 #+end_export
 #+end_center
 **** right                                                         :BMCOL:
@@ -268,8 +269,8 @@ fast convergence to the same stationary distribution
 #+begin_center
 #+begin_export latex
 \(\alpha=0.5\)\\
-\includegraphics<1>[page=38,width=.95\linewidth]{statdist}%
-\includegraphics<2>[page=39,width=.95\linewidth]{statdist}%
+\includegraphics<1>[page=38,width=.9\linewidth]{statdist}%
+\includegraphics<2>[page=39,width=.9\linewidth]{statdist}%
 #+end_export
 #+end_center
 **** bottom                                              :B_ignoreheading:
@@ -316,8 +317,8 @@ random diffusion with smaller scaling
 #+begin_center
 #+begin_export latex
 with sink node adjustment\\
-\includegraphics<1>[page=12,width=.95\linewidth]{statdist}%
-\includegraphics<2>[page=13,width=.95\linewidth]{statdist}%
+\includegraphics<1>[page=12,width=.9\linewidth]{statdist}%
+\includegraphics<2>[page=13,width=.9\linewidth]{statdist}%
 #+end_export
 #+end_center
 **** right                                                         :BMCOL:
@@ -327,10 +328,14 @@ with sink node adjustment\\
 #+begin_center
 #+begin_export latex
 without sink node adjustment\\
-\includegraphics<1>[page=51,width=.95\linewidth]{statdist}%
-\includegraphics<2>[page=52,width=.95\linewidth]{statdist}%
+\includegraphics<1>[page=51,width=.9\linewidth]{statdist}%
+\includegraphics<2>[page=52,width=.9\linewidth]{statdist}%
 #+end_export
 #+end_center
+**** bottom                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
 #+begin_center
 concentration on a specific node (``sink'')
 #+end_center
@@ -474,7 +479,7 @@ change of stationary dist.
 :PROPERTIES:
 :BEAMER_col: 0.4
 :END:
-change of statinary dist.%ribution
+change of statinary dist.
 - 10% edges at random 
 - large effect
 ** graph estimation problem
@@ -497,7 +502,7 @@ estimate series of graph structures \(\{G_t\}\).
 difficulties:
 - infinitely many matrices have
   the same eigenvector
-- the followings are needed:
+- followings are needed:
   - assumptions on graph structures
   - assumptions of graph changes
 e.g. (fused lasso):
@@ -550,8 +555,10 @@ make matrices keep in a restricted subspace:
 :PROPERTIES:
 :BEAMER_env: block
 :END:
-\citeauthor{Chiba_etal2017}
-\citetitle{Chiba_etal2017}
+# \citeauthor{Chiba_etal2017}
+# \citetitle{Chiba_etal2017}
+\citeauthor{Chiba_etal_2017_TimeVaryingTransitionProbability}
+\citetitle{Chiba_etal_2017_TimeVaryingTransitionProbability}
 **** notes                                               :B_ignoreheading:
 :PROPERTIES:
 :BEAMER_env: ignoreheading
